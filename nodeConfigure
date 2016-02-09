@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if type nodebrew > /dev/null 2>&1;
+then
+	nodebrew --version;
+elif type nvm > /dev/null 2>&1;
+then
+	nvm --version;
+elif type nodeenv > /dev/null 2>&1;
+then
+	nodeenv --version;
+else
+	echo 'Prease install Node version manager!!!'
+fi
