@@ -1,14 +1,31 @@
 #!/bin/sh
 
+# nodeConfigの有無
+if [ ! -e node_version_config ];
+	then
+	echo 'No config';
+else
+	echo 'OK';
+	NODE_VERSION=`sed -e 's/"node"//p' -n ./node_version_config | sed 's/.*"\(.*\)".*/\1/g'`
+	NPM_VERSION=`sed -e 's/"npm"//p' -n ./node_version_config | sed 's/.*"\(.*\)".*/\1/g'`
+fi
+
+# 使用しているバージョン管理システムの確認
 if type nodebrew > /dev/null 2>&1;
 then
-	nodebrew --version;
+	nodebrew --version | sed 1\!d;
+	echo ${NODE_VERSION};
+	echo ${NPM_VERSION};
 elif type nvm > /dev/null 2>&1;
 then
-	nvm --version;
+	nvm --version | sed 1\!d;
+	echo ${NODE_VERSION};
+	echo ${NPM_VERSION};
 elif type nodeenv > /dev/null 2>&1;
 then
-	nodeenv --version;
+	nodeenv --version | sed 1\!d;
+	echo ${NODE_VERSION};
+	echo ${NPM_VERSION};
 else
 	echo 'Prease install Node version manager!!!'
 fi
